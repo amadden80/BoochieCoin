@@ -101,7 +101,7 @@ const coins = [
   },
   {
     count: 22.322,
-    name: 'Enigma',
+    name: 'Enigma-Project',
     cost: 125,
   },
   {
@@ -113,6 +113,16 @@ const coins = [
     count: 39,
     name: 'Ripple',
     cost: 125,
+  },
+  {
+    count: 208.041,
+    name: 'Cardano',
+    cost: 250,
+  },
+  {
+    count: 25.726,
+    name: 'EOS',
+    cost: 250,
   },
 ];
 
@@ -148,6 +158,7 @@ const getStats = () => {
             price_usd: obj.price_usd,
             symbol: obj.symbol,
             cost,
+            count,
             total: count * parseFloat(obj.price_usd),
             x: count * parseFloat(obj.price_usd) / cost,
           };
