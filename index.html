@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>LPS</title>
+    <title>BOO</title>
     <style media="screen">
 
       .total {
@@ -35,7 +35,7 @@
   </head>
   <body>
     <h2>
-      <span>EttaCoin (LPS)<span>
+      <span>BoochieCoin (BOO)<span>
     </h2>
     <p id="timer">
     </p>
@@ -55,58 +55,44 @@
     <div id="stage">
     </div>
     <script type="text/javascript">
-const marketCap = 13;
+const circulation = 1;
+const totalInvestment = 2500;
+
 const coins = [
-  {
-    name: 'HempCoin',
-    count: 140,
-    cost: 83.09,
-  },
-  {
-    name: 'Ripple',
-    count: 30,
-    cost: 79.13,
-  },
-  {
-    name: 'Cardano',
-    count: 150,
-    cost: 154.74,
-  },
-  {
-    name: 'Enigma',
-    count: 10,
-    cost: 63.87,
-  },
-  {
-    name: 'Salt',
-    count: 10,
-    cost: 128.73,
-  },
-  {
-    name: 'Modum',
-    count: 13.78,
-    cost: 80,
-  },
-  {
-    name: 'Aion',
-    count: 9.71,
-    cost: 80,
-  },
-  {
-    name: 'Substratum',
-    count: 47,
-    cost: 80,
-  },
-  {
-    name: 'Amber',
-    count: 71,
-    cost: 75,
-  },
-  {
-    name: 'Monetha',
-    count: 183,
-    cost: 80,
-  },
+  {count: 384.297,
+  name: 'Viberate',
+  cost: 250},
+  {count: 72.536,
+  name: 'VeChain',
+  cost: 250},
+  {count: 234.497,
+  name: 'Elixir',
+  cost: 250},
+  {count: 12.08,
+  name: 'OmiseGO',
+  cost: 250},
+  {count: 1860.684,
+  name: 'litecoin-ultra',
+  cost: 250},
+  {count: 1.28857,
+   name: 'NEO',
+   cost: 125},
+  {count: 663.745,
+   name: 'Verge',
+   cost: 125},
+  {count: 909.89,
+   name: 'Poet',
+   cost: 125},
+  {count: 22.322,
+   name: 'Enigma',
+   cost: 125},
+  {count: 808.25,
+   name: 'Tron',
+   cost: 125},
+  {count: 39,
+   name: 'Ripple',
+   cost: 125}
+
 ];
 
 function round(value, decimals) {
@@ -116,12 +102,11 @@ function round(value, decimals) {
 const boughtSum = coins.reduce((acc, curr) => acc + curr.cost, 0);
 
 const getStats = () => {
-
   const template = document.querySelector('#template');
   const cln = template.cloneNode(true);
-  cln.removeAttribute('template')
-  cln.style.display='block';
-  document.querySelector('#stage').prepend(cln)
+  cln.removeAttribute('template');
+  cln.style.display = 'block';
+  document.querySelector('#stage').prepend(cln);
 
   const coinFetches = Promise.all(
     coins.map(({ name, count, cost }) => {
@@ -135,16 +120,16 @@ const getStats = () => {
           const obj = objA[0];
 
           return {
-            "24h": obj.percent_change_24h,
-            "1h": obj.percent_change_1h,
-            "7d": obj.percent_change_7d,
+            '24h': obj.percent_change_24h,
+            '1h': obj.percent_change_1h,
+            '7d': obj.percent_change_7d,
             price_btc: obj.price_btc,
             price_usd: obj.price_usd,
             symbol: obj.symbol,
             cost,
             total: count * parseFloat(obj.price_usd),
-            x : count * parseFloat(obj.price_usd) / cost,
-          }
+            x: count * parseFloat(obj.price_usd) / cost,
+          };
         });
     })
   ).then(coins => {
@@ -152,41 +137,50 @@ const getStats = () => {
     const x = sum / boughtSum;
 
     setTimeout(() => {
-      console.table(coins)
-      console.log({cost: boughtSum, sum, x});
+      console.table(coins);
+      console.log({ cost: boughtSum, sum, x });
     }, 500);
 
     setTimeout(() => {
-      cln.querySelector('.time').innerText = (new Date()).toLocaleTimeString();
-    }, 250)
+      cln.querySelector('.time').innerText = new Date().toLocaleTimeString();
+    }, 250);
+
+    const intestOff = totalInvestment - boughtSum;
+
     setTimeout(() => {
-      cln.querySelector('.total').innerText = `$${round(sum/marketCap, 2).toFixed(2)}`;
-    }, 1250)
+      cln.querySelector('.total').innerText = `$${round(
+        (sum + intestOff) / circulation,
+        2
+      ).toFixed(2)}`;
+    }, 1250);
+    1400;
     setTimeout(() => {
-      cln.querySelector('.change').innerText = `(${round(x, 5)}x)`;
-    }, 1000)
+      cln.querySelector('.change').innerText = `(${round(x, 3)}x)`;
+    }, 1000);
   });
-}
+};
 
 const delay = 1000 * 60 * 5;
 let timer = delay;
 getStats();
 setInterval(() => {
   getStats();
-  resetTimer()
-}, delay)
+  resetTimer();
+}, delay);
 
 const resetTimer = () => {
   timer = delay;
-}
+  document.body.style.backgroundColor =
+    '#' + (((1 << 24) * Math.random()) | 0).toString(16) + '55';
+};
 
 const timerDelay = 250;
 setInterval(() => {
-  timer = timer-timerDelay;
-  document.querySelector('#timer').innerText = `...next: ${Math.floor(timer/1000)}`;
-}, timerDelay)
-
-
+  timer = timer - timerDelay;
+  document.querySelector('#timer').innerText = `...next: ${Math.floor(
+    timer / 1000
+  )}`;
+}, timerDelay);
 </script>
   </body>
 </html>
